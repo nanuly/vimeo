@@ -1,0 +1,280 @@
+<html>
+
+
+
+<head>
+
+   <title>Youtube Upload</title>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <link rel="stylesheet" href="css/upload_video.css">
+
+   <!-- 부트스트랩 & FontAwesome -->
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+</head>
+
+
+
+<style>
+
+  #inputarea{
+
+     border: 1px solid #ccc;
+
+     padding : 10px;
+
+     margin-top: 30px;
+
+     height: 400px;
+
+     border-radius: 10px;
+
+  }
+
+	
+
+  #main-container {
+
+     padding : 50px 20px;
+
+  }
+
+
+
+</style>
+
+
+
+
+
+<body>
+
+    
+
+  <div id="main-container">
+
+    <div class="container logo_title">
+      <div class="row">
+        <header><h2>Upload</h2></header>
+      </div>
+    </div>
+
+   
+
+
+
+    <div id="youtubeModal" class="modal modal-outline-secondary fade" role="dialog">
+
+            <div class="modal-dialog">
+              <!-- Modal content -->
+              <div class="modal-content">
+
+                <div class="modal-header">
+
+                  <h4 class="modal-title">Youtube Upload</h4>
+
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <span id="signinButton" class="pre-sign-in">
+
+                        <!-- IMPORTANT: Replace the value of the <code>data-clientid</code>
+
+                        attribute in the following tag with your project's client ID. -->
+
+                        <span
+
+                            class="g-signin"
+
+                            data-callback="signinCallback"
+
+                            data-clientid="926060128901-040gd2243d1i6oghmvbj5t2mo4cg9goq.apps.googleusercontent.com" 
+
+                            data-cookiepolicy="single_host_origin"
+
+                            data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
+
+                        </span>
+
+                        </span>
+
+                            </div>
+
+                        
+
+                            <div class="post-sign-in">             
+
+                                <div class="form-group">
+
+                                    <label for="title">제목:</label>
+
+                                    <input id="title" class="form-control" type="text" placeholder="동영상 제목">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="description">설명:</label>
+
+                                    <textarea id="description" class="form-control" placeholder="동영상 설명"></textarea>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="privacy-status">공개 설정:</label>
+
+                                    <select id="privacy-status">
+
+                                    <option value="public">공개</option>
+
+                                    <option value="unlisted" selected>미등록</option>
+
+                                    <option value="private">비공개</option>
+
+                                    </select>
+
+                                </div>
+
+                            
+
+                                <div>
+
+                                
+
+                                <div class="form-group">
+
+                                    <div class="input-group mb-3">
+
+                                    <div class="input-group-prepend">
+
+                                        <span class="input-group-text">Upload</span>
+
+                                    </div>
+
+                                    <div class="custom-file">
+
+                                        <input type="file" class="custom-file-input" id="file-youtube" accept="video/*" onchange="$('label[for=file-youtube]').text($(this).val().split('\\').pop())">
+
+                                        <label class="custom-file-label" for="file-youtube">파일 선택</label>
+
+                                    </div>
+
+                                    </div>
+
+                                </div>	
+
+                                
+
+                                <div class="form-group text-right">
+
+                                    <button id="btn-ytb-upload" class="btn btn-outline-primary">업로드하기</button>
+
+                                </div>
+
+                                
+
+                                <div class="during-upload">
+
+                                    <div class="progress">
+
+                                        <div id='progress-bar-youtube' class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+                                    </div>
+
+                                    <span id="bytes-transferred"></span>/<span id="total-bytes"></span> bytes   
+
+                                </div>
+
+                            
+
+                                <div class="post-upload">
+
+                                    <p>Uploaded video with id <span id="video-id"></span>. Polling for status...</p>
+
+                                    <ul id="post-upload-status"></ul>
+
+                                </div>
+
+                                
+
+                                </div>			    
+
+                            </div>
+
+                        </div>
+
+        
+
+                        <div class="modal-footer justify-content-start">
+
+                            <p id="disclaimer">By uploading a video, you certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available on YouTube, and that it otherwise complies with the YouTube Terms of Service located at <a href="https://www.youtube.com/t/terms" target="_blank">https://www.youtube.com/t/terms</a></p>
+
+                        </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div id="inputarea" contenteditable="true" class="col-md-8">
+            
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="container btn_box mt-5">
+          <div class="row justify-content-center">
+            <button class="btn btn-primary btn-block col-md-5" data-toggle="modal" data-target="#youtubeModal">동영상 올리기</button>
+          </div>
+        </div>
+
+        
+        
+
+  </div>
+
+
+
+ 
+
+    
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+
+
+  <script src="https://apis.google.com/js/client:plusone.js"></script>
+
+  <script src="js/cors_upload.js"></script>
+
+  <script src="js/upload_video.js"></script>
+
+  <script src="js/auth.js"></script>
+
+
+
+</body>
+
+</html>
